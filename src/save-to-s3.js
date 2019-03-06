@@ -6,7 +6,7 @@ AWS.config.update({
   apiVersion: '2006-03-01',
   credentials: {
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
   },
   region: process.env.S3_REGION
 })
@@ -23,7 +23,8 @@ async function saveToS3 (dataObject) {
     ACL: 'public-read'
   }
 
-  await s3.putObject(params)
+  await s3
+    .putObject(params)
     .promise()
     .catch(error => {
       logger.error(error.message)

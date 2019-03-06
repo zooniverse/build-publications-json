@@ -1,5 +1,7 @@
 # Build `publications.json`
 
+Pull down publication data from Contentful, build a `publications.json` file for Panoptes Front End, and upload it to S3.
+
 ## Running locally
 
 ```
@@ -23,5 +25,5 @@ These can be saved in a `.env` file if running locally:
 
 ```
 AWS_ACCESS_KEY=here-is-your-access-key
-...
+AWS_SECRET_ACCESS_KEY=...
 ```
