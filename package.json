@@ -1,24 +1,28 @@
 {
+  "private": true,
   "name": "@zooniverse/build-publications-json",
+  "description": "Pull down publication data from Contentful, build a `publications.json` file for Panoptes Front End, and upload it to S3.",
+  "license": "Apache-2.0",
+  "author": "Roger Hutchings <roger@hutchin.gs>",
+  "repository": "https://github.com/zooniverse/build-publications-json.git",
+  "bugs": "https://github.com/zooniverse/build-publications-json/issues",
   "version": "1.0.0",
-  "description": "",
   "main": "src/index.js",
   "scripts": {
     "format": "prettier-standard 'src/**/*.js'",
     "start": "node src/index.js"
   },
-  "author": "Roger Hutchings",
-  "private": true,
-  "license": "ISC",
   "dependencies": {
     "aws-sdk": "^2.415.0",
     "contentful": "^7.1.0",
     "dotenv": "^6.2.0",
     "lodash": "^4.17.11",
-    "mkdirp": "^0.5.1",
     "winston": "^3.2.1"
   },
   "devDependencies": {
     "prettier-standard": "^9.1.1"
+  },
+  "engines": {
+    "node": ">= 10"
   }
 }

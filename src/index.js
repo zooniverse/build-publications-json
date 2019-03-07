@@ -11,7 +11,6 @@ async function main () {
   logger.info(`Logger set to level: ${logger.level}`)
   const publications = await fetchPublications().catch(logger.error)
   const formattedPublicationsData = formatData(publications)
-  // console.info(formattedPublicationsData)
   await saveToS3(formattedPublicationsData)
   logger.info('Finished!')
 }
