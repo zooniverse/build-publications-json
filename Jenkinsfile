@@ -27,5 +27,19 @@ pipeline {
         }
       }
     }
+    stage('Update publications') {
+      agent any
+      environment {
+        CONTENTFUL_ACCESS_TOKEN = credentials('contentful-key')
+      }
+      steps {
+        script {
+          def dockerRepoName = 'zooniverse/build-publications-json'
+          def dockerImageName = "${dockerRepoName}:latest"
+
+          docker.image(dockerImageName).withRun('-e CONTENTFUL_SPACE="jt90kyhvp0qv" -e CONTENTFUL_ACCESS_TOKEN="$CONTENTFUL_ACCESS_TOKEN"')
+        }
+      }
+    }
   }
 }
