@@ -1,6 +1,8 @@
 # Build `publications.json`
 
-Pull down publication data from Contentful, build a `publications.json` file for Panoptes Front End, and upload it to S3.
+Pull down publication data from Contentful, and build a `publications.json` file for Panoptes Front End.
+
+The finished `publications.json` file gets saved to the `./output` directory.
 
 # Running
 
@@ -11,7 +13,7 @@ npm install
 npm start
 ```
 
-See the [Configuration](#Configuration) section below on how to setup a `.env` file.
+See the [Configuration](#Configuration) section below on how to configure the script.
 
 ### Running with Docker
 
@@ -24,7 +26,7 @@ See the [Configuration](#Configuration) section below on how to setup a `.env` f
 1. Run it, including all the required environment variables:
 
     ```sh
-    docker run --env AWS_ACCESS_KEY=... --env AWS_SECRET_ACCESS_KEY=...  zooniverse/build-publications-json
+    docker run --env CONTENTFUL_SPACE=... --env CONTENTFUL_ACCESS_TOKEN=...  zooniverse/build-publications-json
     ```
 
     Alternatively, if you want to use a `.env` file to configure the container:
@@ -33,53 +35,28 @@ See the [Configuration](#Configuration) section below on how to setup a `.env` f
     docker run --env-file .env zooniverse/build-publications-json
     ```
 
-    See the [Configuration](#Configuration) section below on how to setup a `.env` file.
+    See the [Configuration](#Configuration) section below on how to configure the script.
 
-### Running with `docker-compose`
+    The `Dockerfile` exposes a volume at `/usr/src/output`, where you can get the finished JSON file using `docker cp`:
 
-1. Create a `docker-compose.yml` and fill in your environment variables:
-
+    ```sh
+    # $(docker ps --all -q | head -1) gets the container ID of the last run
+    docker cp $(docker ps --all -q | head -1):/usr/src/output/publications.json ./
     ```
-    version: "3"
-    services:
-      node:
-        build: .
-        environment:
-          - AWS_ACCESS_KEY=
-          - AWS_SECRET_ACCESS_KEY=
-          - S3_BUCKET=
-          - S3_REGION=
-          - CONTENTFUL_SPACE=
-          - CONTENTFUL_ACCESS_TOKEN=
-
-    ```
-
-1. Run `docker-compose build`
-1. Run `docker-compose up`
 
 ## Configuration
 
 The app is configured using the following environment variables:
 
-- `AWS_ACCESS_KEY` **(required)**
-- `AWS_SECRET_ACCESS_KEY` **(required)**
 - `CONTENTFUL_ACCESS_TOKEN` **(required)**
 - `CONTENTFUL_SPACE` **(required)**
-- `S3_BUCKET` - defaults to `zooniverse-static`
-- `S3_KEY` - defaults to `publications/publications.json`
-- `S3_REGION` - defaults to `us-east-1`
 
 These can be saved in a `.env` file in the project root:
 
 ```
 # .env for modified config
-AWS_ACCESS_KEY=aws-access-key
-AWS_SECRET_ACCESS_KEY=aws-secret-access-key
 CONTENTFUL_ACCESS_TOKEN=contentful-access-token
 CONTENTFUL_SPACE=contentful-space-token
-S3_BUCKET=zoo-publications
-S3_KEY=pubs/pubs-list.json
-S3_REGION=eu-west-1
 ```
 
 Note that any environment variables defined in your environment will override those defined in `.env` when running locally.
