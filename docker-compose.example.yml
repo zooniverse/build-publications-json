@@ -1,0 +1,11 @@
+version: "3"
+services:
+  node:
+    build: .
+    environment:
+      - AWS_ACCESS_KEY=
+      - AWS_SECRET_ACCESS_KEY=
+      - S3_BUCKET=
+      - S3_REGION=
+      - CONTENTFUL_SPACE=
+      - CONTENTFUL_ACCESS_TOKEN=
